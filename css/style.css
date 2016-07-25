@@ -1,0 +1,409 @@
+/*=========================
+*** General Properties ***
+=========================*/
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+html, 
+body, 
+#container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  padding-top: 50px;
+}
+
+.table {
+  margin-bottom: 0px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0;
+}
+
+
+/*============
+*** Colors ***
+=============*/
+
+.white {
+  color: #fff;
+}
+
+/* gray table text */
+.light-gray {
+        color: rgb(135,135,135);
+}
+
+
+/*===================
+*** Modal Windows ***
+====================*/
+
+
+/*====================
+*** Loading Screen ***
+=====================*/
+
+#back-cover {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(191, 191, 191, 1);    
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+#back-cover h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#back-cover h2,
+#cog-icon {
+    color: #222;
+    z-index: 1500;
+} 
+
+
+/*====================
+*** Navigation Bar ***
+=====================*/
+
+.navbar-inverse,
+#muni-label {
+    background-color: #1A4A96;
+    border-color: #080808;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+    -webkit-transition: color 0.4s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #FFD700;
+}
+
+.navbar .navbar-brand {
+  font-weight: bold;
+  font-size: 25px;
+  color: #fff;
+}
+
+.navbar-collapse.in {
+  overflow-y: scroll;
+}
+
+.navbar-header .navbar-icon-container {
+  margin-right: 15px;
+}
+
+.navbar-header .navbar-icon {
+  line-height: 50px;
+  height: 50px;
+}
+
+.navbar-header a.navbar-icon {
+  margin-left: 25px;
+}
+
+/* make municipality search results appear on top of screen */
+.ui-autocomplete {
+	z-index: 2000;
+}
+
+/* municipal searchbar */
+.ui-state-hover, 
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+    background: #E69500;
+    color: #fff;
+    border-radius:0;
+    border: none;
+    font-weight: normal;
+}
+
+
+/*=========
+*** Map ***
+==========*/
+
+#map {
+  width: auto;
+  height: 100%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.leaflet-control-layers {
+  overflow: auto;
+}
+
+.leaflet-control-layers label {
+  font-weight: normal;
+  margin-bottom: 0px;
+}
+
+.leaflet-control-layers-list input[type="radio"],
+input[type="checkbox"] {
+  margin: 2px;
+}
+
+div.leaflet-top.leaflet-left,
+div.leaflet-top.leaflet-right {
+    margin-top: 15px;
+}
+
+
+/*================
+*** Map Legend ***
+=================*/
+
+ul.legend-cont {
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+ul.legend-cont:last-child {
+    margin-bottom: 0;
+}
+
+ul.legend-cont li {
+    margin-bottom: 10px;
+}
+
+ul.legend-cont li:last-child {
+    margin-bottom: 0;
+}
+
+
+/*====================
+*** Awesome Markers ***
+=====================*/
+
+.awesome-marker i {
+    font-size: 20px;
+}
+
+/* geocode result icon */
+.awesome-marker i.fa.fa-map {
+    font-size: 16px;
+}
+
+
+/*====================
+*** Popup Windows ***
+=====================*/
+
+.feature-popup {
+    font-size: 1.15em;
+}
+
+.feature-popup h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.feature-popup h4 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.feature-popup hr {
+    margin-bottom: 10px;
+    border-color: #a8a8a8;
+}
+
+.feature-popup ul {
+    margin-top: 18px;
+}
+
+.feature-popup ul,
+.feature-popup li {
+    margin-left: 0;
+    padding-left: 0;
+    text-align: left;
+}
+
+.feature-popup li {
+    margin-bottom: 10px;
+}
+
+.feature-popup li:last-child {
+    margin-bottom: 0;
+}
+
+.feature-popup table tr td {
+    width: auto;
+    padding-top: 12px;
+}
+
+.feature-popup table tr td:first-child {
+    text-align: right;
+}
+
+.feature-popup table tr td:last-child {
+    padding-left: 15px;
+}
+
+
+/*====================
+*** Media Queries ***
+=====================*/
+
+@media screen and (max-width: 414px) {
+    
+    .navbar .navbar-brand {
+        font-size: 0.85em;
+    }
+    
+    div.leaflet-top.leaflet-left,
+    div.leaflet-top.leaflet-right {
+        margin-top: 10px;
+    }    
+    
+}
+
+@media screen and (min-width: 415px) {
+  
+    .navbar .navbar-brand {
+    font-size: 18px;
+  
+    }
+}
+
+@media screen and (orientation: landscape) and (max-width: 700px) {
+    
+    div.leaflet-top.leaflet-left,
+    div.leaflet-top.leaflet-right {
+        margin-top: 5px;
+    }
+    
+}
+
+@media screen and (max-width: 1024px) {
+    
+    a.leaflet-control-zoomhome-in,
+    a.leaflet-control-zoomhome-home,
+    a.leaflet-control-zoomhome-out,
+    div.leaflet-control-locate > a,
+    a.leaflet-control-zoomhome-in:hover,
+    a.leaflet-control-zoomhome-home:hover,
+    a.leaflet-control-zoomhome-out:hover,
+    div.leaflet-control-locate > a:hover {
+        min-height: 35px;
+        min-width:  35px;
+        padding-top: 2px;
+        text-align: center;
+        vertical-align: middle;        
+    }
+    
+    a.leaflet-control-zoomhome-in,
+    a.leaflet-control-zoomhome-out {
+        font-size: 2em;
+    }
+    
+    input.geocoder-control-input {
+        min-height: 40px;
+        min-width: 40px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    
+    form.leaflet-control-layers-list input,
+    form.leaflet-control-layers-list input.leaflet-control-layers-selector {
+        height: 20px;
+        width: 20px;
+    }
+    
+    form.leaflet-control-layers-list input + span,
+    form.leaflet-control-layers-list input.leaflet-control-layers-selector + span {
+        display: inline-block;
+        font-weight: bold;
+    }
+    
+    .leaflet-container a.leaflet-popup-close-button {
+        font-size: 1.25em;
+        color: #000;
+    }
+    
+    .leaflet-popup-content {
+        padding: 5px;        
+    }
+    
+    .feature-popup {
+    font-size: 1em;
+    }
+    
+    .feature-popup h2 {
+        margin-top: 10px;
+        font-size: 1.25em;
+    }
+    
+    .feature-popup p {
+        margin-top: 12px;
+        margin-bottom: 0;
+    }
+    
+    .feature-popup li {
+    margin-bottom: 5px;
+    }
+    
+}
+
+@media screen and (min-width: 768px) and (max-width: 1110px) {
+    
+    body {
+        padding-top: 100px;
+    }
+    
+}
+
+
+/*** Print Handling ***/
+@media print {
+  .navbar {
+    display: none !important;
+  }
+  .leaflet-control-container {
+    display: none !important;
+  }
+}
