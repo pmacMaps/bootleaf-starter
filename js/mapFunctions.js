@@ -15,17 +15,6 @@ function setInitialMapZoom(windowWidth) {
     return mapZoom;
 }
 
-// Change map zoom level based upon viewport width
-function viewportChangeMapZoom(windowWidth) {
-    if (windowWidth < 500) {
-        map.setZoom(9);
-    }  else if (windowWidth >= 500 && windowWidth < 1000) {
-        map.setZoom(10);
-    }  else {
-       map.setZoom(11);
-    }
-}
-
 // Set the layer control to be expanded or collapsed based upon viewport width
 function setLayerControlCollapsedValue(windowWidth) {
     var isCollapsed;
@@ -59,35 +48,8 @@ function setPopupMaxWidth(windowWidth) {
     return maxWidth;
 }
 
-/* Search and Zoom to Municipality */
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(function(){
-    for (var i=0; i < muniSearch.length ; i++){
-      returnMuni.push(muniSearch[i]["name"]);
-    }
-    return returnMuni;
-  }, 5500);
-}, false);
-
-//autocomplete search for municipalities
-$( "#muni-search" ).autocomplete({
-  autoFocus:true,
-  minLength:2,   
-  delay:300,   
-  source: returnMuni,
-  select: function(event, ui){
-    //get the entered text and pass it to to corresponding bounds
-    new function(){
-      for (var i=0; i < muniSearch.length; i++){
-        if (ui.item.value === muniSearch[i]["name"]){
-          muniBounds = muniSearch[i]["bounds"];
-        }
-      }
-      map.fitBounds(muniBounds);
-    };
-  }
-});
-
+// Related to geocoder
+// Put in geocoder module?
 var geocodeInput = $('.geocoder-control-input');
 
 // Hides attribution when geosearch is expanded
@@ -118,9 +80,4 @@ function geocodeInputDisplayFix(windowArea) {
 // DOM Content Loaded
 window.addEventListener('DOMContentLoaded', function() {
     geocodeInputDisplayFix(windowArea);
-}, false);
-
-// Resize Event
-window.addEventListener('resize', function() {
-    viewportChangeMapZoom();
 }, false);
