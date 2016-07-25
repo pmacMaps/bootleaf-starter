@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-  
+<html lang="en">  
   <head>
+    <meta charset="utf-8">    
+    <title>BootLeaf Template for Cumberland County</title>     
     
-    <title>BootLeaf Template for Cumberland County</title>
-      
-    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
@@ -42,7 +40,7 @@
     <!-- Leaflet Locate Control -->  
     <link rel="stylesheet" href="http://gis.ccpa.net/assets/leaflet/plugins/leaflet-locate-control/v-0.49/leaflet.locate.min.css">
     <!-- App Custom Styles -->
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="css/style.css">
       
     <!-- Google Analytics -->
     <!-- Uncomment at Go Live
@@ -61,7 +59,8 @@
   </head>
 
   <body>
-    <!-- Navigation -->
+    
+      <!-- Navigation -->
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -86,18 +85,17 @@
          </ul>
         </div><!--/.navbar-collapse -->
       </div>
-    </div> <!-- / navigation -->
-      
+    </div> <!-- / navigation -->      
+    
     <div id="container">
       <div id="map"></div>
-    </div>
-    
+    </div>    
     <!-- Loading Screen -->
     <div id="back-cover">
         <h2>Map Loading &#46;&#46;&#46;</h2>
         <span id="cog-icon"><i class="fa fa-circle-o-notch fa-spin fa-3x"></i></span>
-    </div>
-              
+    </div>              
+    
     <!-- About info window -->
     <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
@@ -116,7 +114,7 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <!-- / About info window -->
-
+    
     <!-- Legend info window -->
     <div class="modal fade" id="legendModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
@@ -136,8 +134,8 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-    </div><!-- / Legend info window -->
-      
+    </div><!-- / Legend info window -->      
+    
     <!-- Disclaimer info window -->
     <div class="modal fade" id="disclaimerModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
@@ -157,8 +155,8 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <!-- / Discliamer info window -->
-        
+    <!-- / Discliamer info window -->        
+    
     <!-- Scripts -->
     <!-- jQuery -->
     <script src="http://gis.ccpa.net/assets/jquery/ver-1.12.1/jquery.min.js"></script>
@@ -182,8 +180,14 @@
     <script src="http://gis.ccpa.net/assets/leaflet/esri/esri-leaflet-geocode/v-1.0.2/esri-leaflet-geocoder.js"></script>
     <!-- Leaflet Locate -->
     <script src="http://gis.ccpa.net/assets/leaflet/plugins/leaflet-locate-control/v-0.49/leaflet.locate.min.js"></script>
+    <!-- User Interface Functions -->
+    <script src="js/mapFunctions.js"></script>
+    <!-- GeoLocate Module -->
+    <script src="js/geolocate.js"></script>
+    <!-- Address Search Module -->
+    <script src="js/addressLocator.js"></script>
     <!-- Map Application -->
-    <script src=""></script>
-           
+    <script src="js/app.js"></script>           
+  
   </body>
 </html>
