@@ -2,6 +2,12 @@
 *** Functions ***
 ===============*/
 
+// Fade out loading screen
+setTimeout(function() {
+    $('#back-cover').fadeOut("slow");  
+    $('#cog-icon').fadeOut("slow");
+}, 4000);
+
 // Set the initial map zoom level based upon viewport width
 function setInitialMapZoom(windowWidth) {
     var mapZoom;    
