@@ -58,9 +58,8 @@
     -->
   </head>
 
-  <body>
-    
-      <!-- Navigation -->
+  <body>    
+    <!-- Navigation -->
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -71,6 +70,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <form class="navbar-form form-inline navbar-right" role="search">
+                <!-- Can wire up address search to this form -->
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon"><i id="search-icon" class="fa fa-search fa-lg"></i></div>
@@ -89,7 +89,8 @@
     
     <div id="container">
       <div id="map"></div>
-    </div>    
+    </div>
+      
     <!-- Loading Screen -->
     <div id="back-cover">
         <h2>Map Loading &#46;&#46;&#46;</h2>
@@ -168,12 +169,12 @@
     <script src="http://gis.ccpa.net/assets/leaflet/foundation/v-0.7.7/leaflet.js"></script>
     <!-- Leaflet Zoom Home -->
     <script src="http://gis.ccpa.net/assets/leaflet/plugins/leaflet-zoomhome/v-1.0.0/leaflet.zoomhome.min.js"></script>
+    <!-- Leaflet Awesome Markers -->
+    <script src="http://gis.ccpa.net/assets/leaflet/plugins/leaflet-awesome-markers/v-2.0.2/leaflet.awesome-markers.min.js"></script>
     <!-- Leaflet AJAX -->
     <script src="http://gis.ccpa.net/assets/leaflet/plugins/leaflet-ajax/v-2.0.0/leaflet.ajax.min.js"></script>
     <!-- ESRI Leaflet -->
-    <script src="http://gis.ccpa.net/assets/leaflet/esri/esri-leaflet/v-1.0.2/esri-leaflet.js"></script>
-    <!-- Leaflet Awesome Markers -->
-    <script src="http://gis.ccpa.net/assets/leaflet/plugins/leaflet-awesome-markers/v-2.0.2/leaflet.awesome-markers.min.js"></script>
+    <script src="http://gis.ccpa.net/assets/leaflet/esri/esri-leaflet/v-1.0.2/esri-leaflet.js"></script>    
     <!-- ESRI Leaflet Renderer -->
     <script src="http://gis.ccpa.net/assets/leaflet/esri/esri-leaflet-renderer/v-1.0.1/esri-leaflet-renderers.js"></script>
     <!-- ESRI Leaflet Geosearch -->
