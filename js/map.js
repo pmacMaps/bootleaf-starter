@@ -1,28 +1,27 @@
-/*********************
-*** Map & Controls ***
-**********************/
+/********************************************************************************
+* Name: Initialize Map
+* Version: 1.0
+* Created by: Patrick McKinney, Cumberland County GIS
+* requires Leaflet ZoomHome plugin - https://github.com/torfsen/leaflet.zoomhome
+**********************************************************************************/
 
-// Map
-map = L.map('map', {
-   center: homeCoords,
-   zoom: initZoom,
-   zoomControl: false,
-   layers: []
-});
+// change map zoom to function based upon viewport variables
 
-// Zoom Home Control
-zoomHomeControl = L.Control.zoomHome({
-    position: 'topleft',
-    zoomHomeTitle: 'Full map extent',
-    homeCoordinates: homeCoords,
-    homeZoom: initZoom
-}).addTo(map);
+function mapInit() {
+    'use strict';
+    
+    // Map
+    map = L.map('map', {
+       center: homeCoords,
+       zoom: setInitialMapZoom(windowWidth),
+       zoomControl: false       
+    });
 
-/*** Layer Control ***/
-basemapGroup = {};
-
-overlayGroup = {};
-
-layerControl = L.control.layers(basemapGroup, overlayGroup, {
-    collapsed: setLayerControlCollapsedValue(windowWidth) 
-}).addTo(map);
+    // Zoom Home Control
+    zoomHomeControl = L.Control.zoomHome({
+        position: 'topleft',
+        zoomHomeTitle: 'Full map extent',
+        homeCoordinates: homeCoords,
+        homeZoom: setInitialMapZoom(windowWidth)
+    }).addTo(map);
+}
