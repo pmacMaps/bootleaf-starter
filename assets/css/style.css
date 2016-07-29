@@ -190,6 +190,13 @@ div.leaflet-top.leaflet-right {
     margin-top: 15px;
 }
 
+/* Leaflet Zoomhom */
+a.leaflet-control-zoomhome-in,
+a.leaflet-control-zoomhome-out {
+    line-height: 26px;
+    font-size: 1.5em;
+}
+
 
 /*================
 *** Map Legend ***
