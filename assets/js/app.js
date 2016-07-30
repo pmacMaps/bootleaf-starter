@@ -42,7 +42,7 @@ zoomHomeControl = L.Control.zoomHome({
 
 
 // Open Street Map
-osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap'
 }).addTo(map);
 
@@ -58,7 +58,7 @@ esriTopo = L.esri.basemapLayer('Topographic');
 // Pennsylvania Metropolitan and Rural Planning Organization Boundaries
 paMPO = L.esri.dynamicMapLayer({
     // service url
-    url: 'http://maps.pasda.psu.edu/ArcGIS/rest/services/pasda/PennDOT/MapServer',
+    url: '//maps.pasda.psu.edu/ArcGIS/rest/services/pasda/PennDOT/MapServer',
     // image format
     format: 'png24',
     // attribution
@@ -82,7 +82,7 @@ paMPO.bindPopup(function (error, featureCollection) {
 // See https://esri.github.io/esri-leaflet/api-reference/layers/feature-layer.html
 // Location of PaGWIS and PennState roadside springs. Roadside springs surveyed by PennState in 2013-15 
 paRoadsideSprings = L.esri.featureLayer({
-    url: 'https://www.gis.dcnr.state.pa.us/agsprod/rest/services/topo/Springs_Collector/FeatureServer/0', // service url
+    url: '//www.gis.dcnr.state.pa.us/agsprod/rest/services/topo/Springs_Collector/FeatureServer/0', // service url
     // is sometimes required if CORS does not work for a GIS service
     useCors: false,
     // style point layers
