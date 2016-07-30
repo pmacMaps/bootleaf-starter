@@ -47,10 +47,10 @@ function toggleFocus(e){
     }
 }
 
-$('#muni-search').on('focus blur', toggleFocus);
+$('#feature-search').on('focus blur', toggleFocus);
 
 /* Prevent hitting enter from refreshing the page */
-$("#muni-search").keypress(function (e) {
+$("#feature-search").keypress(function (e) {
   if (e.which == 13) {
     e.preventDefault();
   }
