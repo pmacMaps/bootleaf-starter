@@ -55,6 +55,7 @@ osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 esriTopo = L.esri.basemapLayer('Topographic');
     
 // ESRI Map Service
+// See https://esri.github.io/esri-leaflet/api-reference/layers/dynamic-map-layer.html
 // Pennsylvania Metropolitan and Rural Planning Organization Boundaries
 paMPO = L.esri.dynamicMapLayer({
     // service url
@@ -63,6 +64,8 @@ paMPO = L.esri.dynamicMapLayer({
     format: 'png24',
     // attribution
     attribution: 'Pennsylvania Department of Transportation',
+    // sometimes you need to set to false if CORS does not work for a service
+    useCors: false,
     // layers to include from service
     layers: [15]    
 }).addTo(map);
@@ -83,7 +86,7 @@ paMPO.bindPopup(function (error, featureCollection) {
 // Location of PaGWIS and PennState roadside springs. Roadside springs surveyed by PennState in 2013-15 
 paRoadsideSprings = L.esri.featureLayer({
     url: '//www.gis.dcnr.state.pa.us/agsprod/rest/services/topo/Springs_Collector/FeatureServer/0', // service url
-    // is sometimes required if CORS does not work for a GIS service
+    //sometimes you need to set to false if CORS does not work for a GIS service
     useCors: false,
     // style point layers
     //pointToLayer: function (feature, latlng) {}, // use this to get custom style
