@@ -23,7 +23,11 @@ var basemapGroup;
 var overlayGroup;
 var layerControl;
 // Layers - not sure about this
+// open stree map
+var osm;
 // ESRI service
+var pfbc;
+var localParks;
 // GeoJSON
 // simple vector format
 
@@ -42,38 +46,75 @@ zoomHomeControl = L.Control.zoomHome({
     homeZoom: setInitialMapZoom(windowWidth)
 }).addTo(map);
 
+// Open Street Map
+osm = L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
 
 /*** ESRI Services ***/
-//ESRI Leaflet v 1.0.2 - add link
+//ESRI Leaflet v x.x.x - add link
     
-// ESRI Map Service
-L.esri.dynamicMapLayer({
+// ESRI Dynamic Map Service
+// rasterized display; don't add number at end of service url
+// Pennsylvania Fish & Boat Comission
+pfbc = L.esri.dynamicMapLayer({
     // service url
-    url: '',
+    // https does not work for this domain
+    url: 'http://maps.pasda.psu.edu/ArcGIS/rest/services/pasda/PAFishBoat/MapServer',
     // image format
-    format: '',
+    format: 'png24',
     // attribution
-    attribution: '',
+    attribution: 'Pennsylvania Fish & Boat Comission',
     // layers to include from service
-    layers: []    
-});
+    // 9 = Class A Trout Streams
+    // 24 = Hatcheries
+    layers: [9,24]
+    // set useCors to false if you get CORS error
+    //useCors: false
+}).addTo(map);
 
 // ESRI Feature Service
-L.esri.featureLayer({
-    url: '', // service url
+// vector display; add number at end of service url
+// Local parks in Pennsylvania
+localParks = L.esri.featureLayer({
+    // https does not work for this domain
+    url: 'http://maps.pasda.psu.edu/arcgis/rest/services/pasda/DCNR/MapServer/18',// service url
+    // attribution
+    attribution: "Pennsylvania DCNR",
+    // set useCors to false if you get CORS error
+    //useCors: false
     // style point layers
-    pointToLayer: function (feature, latlng) {},
+    //pointToLayer: function (feature, latlng) {},
     // style line or polygon features
-    style: function (feature, layer) {},
-    // bind pop-up, mouse-over effect, etc
-    onEachFeature: function (feature, layer) {}
+    style: function (feature, layer) {
+        return {
+            // outline color
+            color: '#fff',
+            // weight of outline
+            weight: 2.5,
+            // opacity of outline
+            opacity: 0.75,
+            // fill color
+            fillColor: '#1EB300',
+            // fill opacity
+            fillOpacity: 0.5
+        }
+    }    
 }).addTo(map);
+
+// add popup to feature service
+// update pop-up
+localParks.bindPopup(function(layer) {
+    return L.Util.template('<h2>{PARK_NAME}</h2>', layer.feature.properties)
+});
 
 /****************************************/
 
 /*** GeoJSON ***/
 // create sample with $.getJSON()
-// Sample depends upon Leaflet AJAX v 2.0.0
+// Sample depends upon Leaflet AJAX v x.x.x
+/*
 new L.GeoJSON.AJAX('path/to/data', {
     // style point layers
     pointToLayer: function (feature, latlng) {},
@@ -82,25 +123,31 @@ new L.GeoJSON.AJAX('path/to/data', {
     // bind pop-up, mouse-over effect, etc
     onEachFeature: function (feature, layer) {}
 }).addTo(map);
+*/
 
 /****************************************/
 
 /*** Basic Point ***/
+/*
 L.marker([lat,  long], {
     icon: berkeyIcon, // or path to icon
     title: 'Map Feature',
     alt: 'alt text for image'
 }).addTo(map);
+*/
     
 /*** Basic Polyline ***/
+/*
 L.polyline(arrayVariableStoringGeometry, {
     color: '#20E167',
     weight: 1.5,
     opacity: 1,
     dashArray: '5, 10'
 }).addTo(map);
+*/
 
 /*** Basic Polygon ***/
+/*
 L.polygon(arrayVariableStoringGeometry, {
     color: '#20E167',
     weight: 2.5,
@@ -108,30 +155,37 @@ L.polygon(arrayVariableStoringGeometry, {
     fillColor: '#9AFFDE',
     fillOpacity: 0.5  
 }).addTo(map);
+*/
 
 /****************************************/
     
 /*** Default Icon ***/
 // for use in point layers
+/*
 L.icon({
     iconUrl: 'path/to/image',
     iconSize: [25, 25]    
 });
+*/
 
 /*** Awesome Markers ***/
-// depends on Leaflet Awesome Markers v 2.0.2
+// depends on Leaflet Awesome Markers v x.x.x
 // Disposal Sites Icon
+/*
 L.AwesomeMarkers.icon({
     icon: 'icon you want',
     prefix: 'fa', // uses font awesome icon set
     markerColor: 'darkred', // red, darkred, orange, green, darkgreen, blue, purple, darkpurple, cadetblue
     iconColor: '#fff' // hex color
 });
+*/
     
 /****************************************/
 
 /*** Layer Control ***/
-basemapGroup = {};
+basemapGroup = {
+    "Open Street Map": osm
+};
 
 overlayGroup = {};
 
@@ -143,4 +197,4 @@ layerControl = L.control.layers(basemapGroup, overlayGroup, {
 geoLocater();
 
 // Address Locator
-addressLocator();
+//addressLocator();

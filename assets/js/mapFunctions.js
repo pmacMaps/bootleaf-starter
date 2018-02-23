@@ -9,6 +9,8 @@ setTimeout(function() {
 }, 4000);
 
 // Set the initial map zoom level based upon viewport width
+// fine tune viewport width values and zoom levels based upon
+// extent of your map
 function setInitialMapZoom(windowWidth) {
     var mapZoom;    
     if (windowWidth < 500) {
