@@ -2,7 +2,7 @@
 * Name: Leaflet Locate Me Widget
 * Version: 1.0
 * Created by: Patrick McKinney, Cumberland County GIS
-* Notes: for use with Leaflet Locate Control version 0.49
+* Notes: for use with Leaflet Locate Control version 0.52
 **********************************************************************/
 
 function geoLocater() {

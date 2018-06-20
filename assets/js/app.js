@@ -1,22 +1,17 @@
 'use strict';
 
-/****************
-*** Variables ***
-****************/
-
+/*** Variables ***/
 // viewport
 var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 var windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 var windowArea = windowWidth * windowHeight;
-// municipal search
-var muniSearch = [];
-var returnMuni = [];
-var muniBounds;
+// boolean for if device is mobile or note
+var isMobileDevice = L.Browser.mobile;
 // map and controls
 var map;
 var homeCoords = [40.263044, -76.896423]; // can use instead of function
 var initZoom = 15;
-var container;
+// zoomHome control
 var zoomHomeControl;
 // layer control
 var basemapGroup;
@@ -26,6 +21,7 @@ var layerControl;
 // open stree map
 var osm;
 // ESRI service
+var esriTopo;
 var pfbc;
 var localParks;
 // GeoJSON
@@ -47,21 +43,22 @@ zoomHomeControl = L.Control.zoomHome({
 }).addTo(map);
 
 // Open Street Map
-osm = L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
+osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 
 /*** ESRI Services ***/
 //ESRI Leaflet v x.x.x - add link
+// Esri Topographic Base Map
+esriTopo = L.esri.basemapLayer('Topographic');
     
 // ESRI Dynamic Map Service
 // rasterized display; don't add number at end of service url
 // Pennsylvania Fish & Boat Comission
 pfbc = L.esri.dynamicMapLayer({
-    // service url
-    // https does not work for this domain
-    url: 'http://maps.pasda.psu.edu/ArcGIS/rest/services/pasda/PAFishBoat/MapServer',
+    // service url    
+    url: '//maps.pasda.psu.edu/ArcGIS/rest/services/pasda/PAFishBoat/MapServer',
     // image format
     format: 'png24',
     // attribution
@@ -78,8 +75,8 @@ pfbc = L.esri.dynamicMapLayer({
 // vector display; add number at end of service url
 // Local parks in Pennsylvania
 localParks = L.esri.featureLayer({
-    // https does not work for this domain
-    url: 'http://maps.pasda.psu.edu/arcgis/rest/services/pasda/DCNR/MapServer/18',// service url
+    // service url
+    url: '//maps.pasda.psu.edu/arcgis/rest/services/pasda/DCNR/MapServer/18',
     // attribution
     attribution: "Pennsylvania DCNR",
     // set useCors to false if you get CORS error
@@ -184,7 +181,8 @@ L.AwesomeMarkers.icon({
 
 /*** Layer Control ***/
 basemapGroup = {
-    "Open Street Map": osm
+    "Open Street Map": osm,
+    "Esri Topographic": esriTopo
 };
 
 overlayGroup = {};
@@ -197,4 +195,4 @@ layerControl = L.control.layers(basemapGroup, overlayGroup, {
 geoLocater();
 
 // Address Locator
-//addressLocator();
+addressLocator();
