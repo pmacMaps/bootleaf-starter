@@ -17,6 +17,7 @@ var zoomHomeControl;
 var basemapGroup;
 var overlayGroup;
 var layerControl;
+<<<<<<< HEAD
 // Layers - not sure about this
 // open stree map
 var osm;
@@ -26,6 +27,10 @@ var pfbc;
 var localParks;
 // GeoJSON
 // simple vector format
+=======
+// Layers 
+var osm;
+var esriTopo;
 
 // Map
 map = L.map('map', {
@@ -46,7 +51,6 @@ zoomHomeControl = L.Control.zoomHome({
 osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
-
 
 /*** ESRI Services ***/
 //ESRI Leaflet v x.x.x - add link
@@ -98,7 +102,6 @@ localParks = L.esri.featureLayer({
             fillOpacity: 0.5
         }
     }    
-}).addTo(map);
 
 // add popup to feature service
 // update pop-up
@@ -110,15 +113,28 @@ localParks.bindPopup(function(layer) {
 
 /*** GeoJSON ***/
 // create sample with $.getJSON()
+<<<<<<< HEAD
 // Sample depends upon Leaflet AJAX v x.x.x
 /*
 new L.GeoJSON.AJAX('path/to/data', {
+=======
+// Sample depends upon Leaflet AJAX v 2.0.0
+// SEPTA Regional Lines
+septaLines = new L.GeoJSON.AJAX('assets/geojson/SEPTAGISRegionalRailLines2012.geojson', {
+>>>>>>> ad6dc19f616ec612c5ae02287d87974eb95950b1
     // style point layers
-    pointToLayer: function (feature, latlng) {},
+    //pointToLayer: function (feature, latlng) {},
     // style line or polygon features
-    style: function (feature, layer) {},
+    style: function (feature, layer) {
+        return {
+            color: '#ff0000',
+            weight: 3.5,
+            opacity: 1,
+            clickable: false
+        }
+    }
     // bind pop-up, mouse-over effect, etc
-    onEachFeature: function (feature, layer) {}
+    //onEachFeature: function (feature, layer) {}
 }).addTo(map);
 */
 
