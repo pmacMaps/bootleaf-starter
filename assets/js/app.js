@@ -1,6 +1,7 @@
 'use strict';
 
 /*** Variables ***/
+var loadScreenTimer;
 // viewport
 var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 var windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
@@ -17,20 +18,14 @@ var zoomHomeControl;
 var basemapGroup;
 var overlayGroup;
 var layerControl;
-<<<<<<< HEAD
-// Layers - not sure about this
-// open stree map
 var osm;
+var esriTopo;
 // ESRI service
 var esriTopo;
 var pfbc;
 var localParks;
+var mapServicesArray;
 // GeoJSON
-// simple vector format
-=======
-// Layers 
-var osm;
-var esriTopo;
 
 // Map
 map = L.map('map', {
@@ -70,10 +65,11 @@ pfbc = L.esri.dynamicMapLayer({
     // layers to include from service
     // 9 = Class A Trout Streams
     // 24 = Hatcheries
-    layers: [9,24]
+    layers: [9,24],
+    isLoaded: false
     // set useCors to false if you get CORS error
     //useCors: false
-}).addTo(map);
+});
 
 // ESRI Feature Service
 // vector display; add number at end of service url
@@ -101,7 +97,9 @@ localParks = L.esri.featureLayer({
             // fill opacity
             fillOpacity: 0.5
         }
-    }    
+    },
+    isLoaded: false
+});
 
 // add popup to feature service
 // update pop-up
@@ -109,36 +107,20 @@ localParks.bindPopup(function(layer) {
     return L.Util.template('<h2>{PARK_NAME}</h2>', layer.feature.properties)
 });
 
-/****************************************/
+// array containing map/feature services
+mapServicesArray = [pfbc,localParks];
+
+// process map/feature services
+for (var i = 0; i < mapServicesArray.length; i++) {
+    processLoadEvent(mapServicesArray[i]);    
+    mapServicesArray[i].addTo(map);
+}
 
 /*** GeoJSON ***/
 // create sample with $.getJSON()
-<<<<<<< HEAD
-// Sample depends upon Leaflet AJAX v x.x.x
-/*
-new L.GeoJSON.AJAX('path/to/data', {
-=======
-// Sample depends upon Leaflet AJAX v 2.0.0
-// SEPTA Regional Lines
-septaLines = new L.GeoJSON.AJAX('assets/geojson/SEPTAGISRegionalRailLines2012.geojson', {
->>>>>>> ad6dc19f616ec612c5ae02287d87974eb95950b1
-    // style point layers
-    //pointToLayer: function (feature, latlng) {},
-    // style line or polygon features
-    style: function (feature, layer) {
-        return {
-            color: '#ff0000',
-            weight: 3.5,
-            opacity: 1,
-            clickable: false
-        }
-    }
-    // bind pop-up, mouse-over effect, etc
-    //onEachFeature: function (feature, layer) {}
-}).addTo(map);
-*/
 
-/****************************************/
+// Sample depends upon Leaflet AJAX v x.x.x
+
 
 /*** Basic Point ***/
 /*
@@ -201,10 +183,13 @@ basemapGroup = {
     "Esri Topographic": esriTopo
 };
 
-overlayGroup = {};
+overlayGroup = {
+    "Fish & Boat Commission Layers": pfbc,
+    "Local Parks": pfbc
+};
 
 layerControl = L.control.layers(basemapGroup, overlayGroup, {
-    collapsed: setLayerControlCollapsedValue(windowWidth) 
+    collapsed: false
 }).addTo(map);
 
 // GeoLocate module
@@ -212,3 +197,30 @@ geoLocater();
 
 // Address Locator
 addressLocator();
+
+/*** Remove loading screen after services loaded ***/
+loadScreenTimer = window.setInterval(function() { 
+    var backCover = $('#back-cover'),
+        pfbcLoaded = pfbc.options.isLoaded,
+        localParksLoaded = localParks.options.isLoaded;        
+    
+    if (pfbcLoaded && localParksLoaded) {
+        // remove loading screen
+        window.setTimeout(function() {
+        backCover.fadeOut('slow');         
+       }, 4000);
+        
+        // clear timer
+        window.clearInterval(loadScreenTimer);        
+    } else {
+      console.log('layers still loading');    
+    }
+}, 2000);   
+
+// Remove loading screen when warning modal is closed
+$('#layerErrorModal').on('hide.bs.modal', function(e) {
+   // remove loading screen
+   $('#back-cover').fadeOut('slow');
+   // clear timer
+   window.clearInterval(loadScreenTimer);     
+});

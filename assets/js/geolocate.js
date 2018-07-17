@@ -33,7 +33,7 @@ function geoLocater() {
           alert(context.options.strings.outsideMapBoundsMsg);
       },
       strings: {
-        title: "Find my location",
+        title: "Show my current location",
         popup: "You are within {distance} {unit} from this point",
         outsideMapBoundsMsg: "You seem to be located outside the boundaries of the map"
       },
