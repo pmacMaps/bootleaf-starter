@@ -18,16 +18,14 @@ var zoomHomeControl;
 var basemapGroup;
 var overlayGroup;
 var layerControl;
-// Layers - not sure about this
-// open stree map
 var osm;
+var esriTopo;
 // ESRI service
 var esriTopo;
 var pfbc;
 var localParks;
 var mapServicesArray;
 // GeoJSON
-// simple vector format
 
 // Map
 map = L.map('map', {
@@ -48,7 +46,6 @@ zoomHomeControl = L.Control.zoomHome({
 osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
-
 
 /*** ESRI Services ***/
 //ESRI Leaflet v x.x.x - add link
@@ -119,23 +116,11 @@ for (var i = 0; i < mapServicesArray.length; i++) {
     mapServicesArray[i].addTo(map);
 }
 
-/****************************************/
-
 /*** GeoJSON ***/
 // create sample with $.getJSON()
-// Sample depends upon Leaflet AJAX v x.x.x
-/*
-new L.GeoJSON.AJAX('path/to/data', {
-    // style point layers
-    pointToLayer: function (feature, latlng) {},
-    // style line or polygon features
-    style: function (feature, layer) {},
-    // bind pop-up, mouse-over effect, etc
-    onEachFeature: function (feature, layer) {}
-}).addTo(map);
-*/
 
-/****************************************/
+// Sample depends upon Leaflet AJAX v x.x.x
+
 
 /*** Basic Point ***/
 /*
