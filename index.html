@@ -19,16 +19,16 @@
 	<!-- Facebook sharing -->
     <!-- Update Social Sharing Content -->
 	<meta property="og:type" content="article" />
-	<meta property="og:title" content="" />
+	<meta property="og:title" content="Bootleaf Template" />
 	<meta property="og:image" content="" />
-	<meta property="og:description" content="" />
+	<meta property="og:description" content="A template application for using Leaflet.js and Bootstrap" />
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <!-- jQuery UI -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" />
     <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
     <!-- Leaflet Awesome Markers -->
@@ -44,7 +44,6 @@
     <!-- App Custom Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
   </head>
-
   <body>
     <!-- Navigation -->
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -67,23 +66,21 @@
             </form>
           <ul class="nav navbar-nav">
             <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;About</a></li>
+            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="layers-btn"><i class="fa fa-map white"></i>&nbsp;&nbsp;Basemap &amp; Layers Toggle</a></li>
             <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-picture-o white"></i>&nbsp;&nbsp;Show Legend</a></li>
             <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="disclaimer-btn"><i class="fa fa-exclamation-circle white"></i>&nbsp;&nbsp;Disclaimer</a></li>
          </ul>
         </div><!--/.navbar-collapse -->
       </div>
     </div> <!-- / navigation -->
-
     <div id="container">
       <div id="map"></div> <!-- leaflet map goes in here -->
     </div>
-
     <!-- Loading Screen -->
     <div id="back-cover">
         <h2>Map Loading &#46;&#46;&#46;</h2>
         <span id="cog-icon"><i class="fa fa-circle-o-notch fa-spin fa-3x"></i></span>
     </div>
-
     <!-- About info window -->
     <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
@@ -102,7 +99,6 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <!-- / About info window -->
-
     <!-- Legend info window -->
     <div class="modal fade" id="legendModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
@@ -120,7 +116,6 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
     </div><!-- / Legend info window -->
-
     <!-- Disclaimer info window -->
     <div class="modal fade" id="disclaimerModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
@@ -139,7 +134,41 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <!-- / Discliamer info window -->
-
+    <!-- Basemap & Layers info window -->
+    <div class="modal fade" id="layersModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Change Basemap &amp; Toggle Layers</h4>
+          </div>
+          <div class="modal-body">
+            <div id="layersControlBox"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->    
+    <!-- error message modal -->
+    <div class="modal fade" id="layerErrorModal" tabindex="-1" role="dialog" aria-labelledby="layerErrorModal" aria-hidden="true">
+       <div class="modal-dialog">
+          <div class="modal-content">
+             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Error Adding Layers</h4>
+             </div>
+             <div id="erMsg" class="modal-body">
+                <h4 class="text-danger">Warning: One or more layers failed to load on the map!</h4>
+             </div>
+                <div class="modal-footer">
+                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+                </div>
+             </div> <!-- /.modal-content -->
+       </div> <!-- /.modal-dialog -->
+    </div> <!-- /.modal -->
+    <!-- / Error message info window -->  
     <!-- Scripts -->
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -166,7 +195,7 @@
     <!-- ESRI Leaflet Geosearch -->
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
     integrity="sha512-zdT4Pc2tIrc6uoYly2Wp8jh6EPEWaveqqD3sT0lf5yei19BC1WulGuh5CesB0ldBKZieKGD7Qyf/G0jdSe016A=="
-    crossorigin=""></script>
+    crossorigin=""></script>    
     <!-- Esri Leaflet Legend -->
     <script src="assets/plugins/esri-leaflet-legend-2.0.0/esri-leaflet-legend.js"></script>
     <!-- Leaflet Locate -->

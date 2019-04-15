@@ -59,7 +59,9 @@ input[type="checkbox"] {
 /*===================
 *** Modal Windows ***
 ====================*/
-
+.modal-body {
+    min-height: 200px;
+}
 
 /*====================
 *** Loading Screen ***

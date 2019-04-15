@@ -1,9 +1,7 @@
 'use strict';
 
-/****************
-*** Variables ***
-****************/
-
+/*** Variables ***/
+var loadScreenTimer;
 // viewport
 var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
 windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
@@ -18,6 +16,7 @@ map,
 homeCoords = [40.263044, -76.896423],
 container, // what is this?
 zoomHomeControl,
+loadScreenTimer,    
 // layer control
 basemapGroup,
 overlayGroup,
@@ -28,6 +27,7 @@ osm,
 // ESRI service
 wildTroutStreams,
 localParks,
+mapServicesArray,    
 // GeoJSON
 pmgMembers;
 
@@ -47,7 +47,7 @@ zoomHomeControl = L.Control.zoomHome({
 }).addTo(map);
 
 // Open Street Map
-osm = L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
+osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
@@ -57,7 +57,6 @@ osm = L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
 // Pennsylvania Fish & Boat Comission
 wildTroutStreams = L.esri.dynamicMapLayer({
     // service url
-    // https does not work for this domain
     url: '//maps.pasda.psu.edu/ArcGIS/rest/services/pasda/PAFishBoat/MapServer',
     // image format
     format: 'png24',
@@ -66,9 +65,12 @@ wildTroutStreams = L.esri.dynamicMapLayer({
     // layers to include from service
     // 9 = Class A Trout Streams
     layers: [9]
+    // 24 = Hatcheries
+    layers: [9,24],
+    isLoaded: false
     // set useCors to false if you get CORS error
     //useCors: false
-}).addTo(map);
+});    
 
 // ESRI Feature Service
 // vector display; add number at end of service url
@@ -96,8 +98,9 @@ localParks = L.esri.featureLayer({
             // fill opacity
             fillOpacity: 0.5
         }
-    }    
-}).addTo(map);
+    },
+    isLoaded: false
+});
 
 // add popup to feature service
 // add conditional test for pop-up content 
@@ -107,6 +110,15 @@ localParks = L.esri.featureLayer({
 localParks.bindPopup(function(layer) {
     return L.Util.template('<div class="feat-popup"><h2>{PARK_NAME}</h2><p>This park is a {PARK_TYPE} is {Acres} acres in area.  You can visit the park <a href="{URL}" target="_blank">website</a> for more information.</p></div>', layer.feature.properties)
 });
+
+// array containing map/feature services
+mapServicesArray = [pfbc,localParks];
+
+// process map/feature services
+for (var i = 0; i < mapServicesArray.length; i++) {
+    processLoadEvent(mapServicesArray[i]);    
+    mapServicesArray[i].addTo(map);
+}
 
 /****************************************/
 
@@ -135,7 +147,8 @@ L.AwesomeMarkers.icon({
 /*** Layer Control ***/
 // basemap group
 basemapGroup = {
-    "Open Street Map": osm
+    "Open Street Map": osm,
+    "Esri Topographic": esriTopo
 };
 
 // thematic layers group
@@ -146,7 +159,7 @@ overlayGroup = {
 };
 
 layerControl = L.control.layers(basemapGroup, overlayGroup, {
-    collapsed: setLayerControlCollapsedValue(windowWidth) 
+    collapsed: false
 }).addTo(map);
 
 // GeoLocate module
@@ -154,3 +167,30 @@ geoLocater();
 
 // Address Locator
 //addressLocator();
+
+/*** Remove loading screen after services loaded ***/
+loadScreenTimer = window.setInterval(function() { 
+    var backCover = $('#back-cover'),
+        pfbcLoaded = pfbc.options.isLoaded,
+        localParksLoaded = localParks.options.isLoaded;        
+    
+    if (pfbcLoaded && localParksLoaded) {
+        // remove loading screen
+        window.setTimeout(function() {
+        backCover.fadeOut('slow');         
+       }, 4000);
+        
+        // clear timer
+        window.clearInterval(loadScreenTimer);        
+    } else {
+      console.log('layers still loading');    
+    }
+}, 2000);   
+
+// Remove loading screen when warning modal is closed
+$('#layerErrorModal').on('hide.bs.modal', function(e) {
+   // remove loading screen
+   $('#back-cover').fadeOut('slow');
+   // clear timer
+   window.clearInterval(loadScreenTimer);     
+});

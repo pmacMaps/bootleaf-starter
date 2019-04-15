@@ -24,6 +24,13 @@ $("#about-btn").click(function() {
   return false;
 });
 
+// Open Layers info window 
+$("#layers-btn").click(function() {
+  $("#layersModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
 // Open Legend info window
 $("#legend-btn").click(function() {
   $("#legendModal").modal("show");

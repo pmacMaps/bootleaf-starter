@@ -1,12 +1,40 @@
 /*===============
 *** Functions ***
 ===============*/
+// Attach layers control to modal
+    function attachLayersControl() {
+        var layerControl = $(".leaflet-control-layers"),
+        layerModalBody = $('#layersControlBox');
 
-// Fade out loading screen
-setTimeout(function() {
-    $('#back-cover').fadeOut("slow");  
-    $('#cog-icon').fadeOut("slow");
-}, 4000);
+        layerControl.detach();
+        layerModalBody.append(layerControl);
+    }
+
+// function to handle load event for map services
+function processLoadEvent(service) {
+   // service request success event
+   service.on('requestsuccess', function(e) {     
+      // set isLoaded property to true
+      service.options.isLoaded = true;      
+   });   
+  
+   // request error event
+   service.on('requesterror', function(e) {      
+      // if the error url matches the url for the map service, display error messages
+      // without this logic, various urls related to the service appear
+      if (e.url == service.options.url) {          
+         // set isLoaded property to false
+         service.options.isLoaded = false; 
+        
+         // add warning messages to console
+         console.warn('Layer failed to load: ' + service.options.url);
+         console.warn('Code: ' + e.code + '; Message: ' + e.message);
+                              
+         // show modal window
+         $('#layerErrorModal').modal('show'); 
+      }
+   });
+}
 
 // Set the initial map zoom level based upon viewport width
 // fine tune viewport width values and zoom levels based upon
@@ -21,17 +49,6 @@ function setInitialMapZoom(windowWidth) {
         mapZoom = 11;  
     }
     return mapZoom;
-}
-
-// Set the layer control to be expanded or collapsed based upon viewport width
-function setLayerControlCollapsedValue(windowWidth) {
-    var isCollapsed;
-    if (windowWidth < 768) {
-        isCollapsed = true;
-    } else {
-        isCollapsed = false;
-    }
-    return isCollapsed;
 }
 
 // Set max height of pop-up window 
@@ -86,6 +103,13 @@ function geocodeInputDisplayFix(windowArea) {
 ***********************/
 
 // DOM Content Loaded
-window.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {    
     geocodeInputDisplayFix(windowArea);
-}, false);
+    attachLayersControl();
+    
+    // window resize event
+    // resize event
+    $(window).resize(function() {
+        attachLayersControl();
+    });
+});
