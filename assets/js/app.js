@@ -5,31 +5,31 @@
 ****************/
 
 // viewport
-var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-var windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-var windowArea = windowWidth * windowHeight;
-// municipal search
-var muniSearch = [];
-var returnMuni = [];
-var muniBounds;
+var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+windowArea = windowWidth * windowHeight,
+// GeoJSON search
+// update var names
+muniSearch = [],
+returnMuni = [],
+muniBounds,
 // map and controls
-var map;
-var homeCoords = [40.263044, -76.896423]; // can use instead of function
-var initZoom = 15;
-var container;
-var zoomHomeControl;
+map,
+homeCoords = [40.263044, -76.896423],
+container, // what is this?
+zoomHomeControl,
 // layer control
-var basemapGroup;
-var overlayGroup;
-var layerControl;
+basemapGroup,
+overlayGroup,
+layerControl,
 // Layers - not sure about this
 // open stree map
-var osm;
+osm,
 // ESRI service
-var pfbc;
-var localParks;
+wildTroutStreams,
+localParks,
 // GeoJSON
-// simple vector format
+pmgMembers;
 
 // Map
 map = L.map('map', {
@@ -51,25 +51,21 @@ osm = L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-
 /*** ESRI Services ***/
-//ESRI Leaflet v x.x.x - add link
-    
 // ESRI Dynamic Map Service
 // rasterized display; don't add number at end of service url
 // Pennsylvania Fish & Boat Comission
-pfbc = L.esri.dynamicMapLayer({
+wildTroutStreams = L.esri.dynamicMapLayer({
     // service url
     // https does not work for this domain
-    url: 'http://maps.pasda.psu.edu/ArcGIS/rest/services/pasda/PAFishBoat/MapServer',
+    url: '//maps.pasda.psu.edu/ArcGIS/rest/services/pasda/PAFishBoat/MapServer',
     // image format
     format: 'png24',
     // attribution
     attribution: 'Pennsylvania Fish & Boat Comission',
     // layers to include from service
     // 9 = Class A Trout Streams
-    // 24 = Hatcheries
-    layers: [9,24]
+    layers: [9]
     // set useCors to false if you get CORS error
     //useCors: false
 }).addTo(map);
@@ -79,7 +75,7 @@ pfbc = L.esri.dynamicMapLayer({
 // Local parks in Pennsylvania
 localParks = L.esri.featureLayer({
     // https does not work for this domain
-    url: 'http://maps.pasda.psu.edu/arcgis/rest/services/pasda/DCNR/MapServer/18',// service url
+    url: '//maps.pasda.psu.edu/arcgis/rest/services/pasda/DCNR/MapServer/18',// service url
     // attribution
     attribution: "Pennsylvania DCNR",
     // set useCors to false if you get CORS error
@@ -104,9 +100,12 @@ localParks = L.esri.featureLayer({
 }).addTo(map);
 
 // add popup to feature service
-// update pop-up
+// add conditional test for pop-up content 
+// false urls
+// format decimals for acres
+// add popup options for max width and max height functions
 localParks.bindPopup(function(layer) {
-    return L.Util.template('<h2>{PARK_NAME}</h2>', layer.feature.properties)
+    return L.Util.template('<div class="feat-popup"><h2>{PARK_NAME}</h2><p>This park is a {PARK_TYPE} is {Acres} acres in area.  You can visit the park <a href="{URL}" target="_blank">website</a> for more information.</p></div>', layer.feature.properties)
 });
 
 /****************************************/
@@ -114,59 +113,10 @@ localParks.bindPopup(function(layer) {
 /*** GeoJSON ***/
 // create sample with $.getJSON()
 // Sample depends upon Leaflet AJAX v x.x.x
-/*
-new L.GeoJSON.AJAX('path/to/data', {
+pmgMembers = new L.GeoJSON.AJAX('./assets/data/pamagic_members_06_2017.geojson', {
     // style point layers
-    pointToLayer: function (feature, latlng) {},
-    // style line or polygon features
-    style: function (feature, layer) {},
-    // bind pop-up, mouse-over effect, etc
-    onEachFeature: function (feature, layer) {}
+    //pointToLayer: function (feature, latlng) {}
 }).addTo(map);
-*/
-
-/****************************************/
-
-/*** Basic Point ***/
-/*
-L.marker([lat,  long], {
-    icon: berkeyIcon, // or path to icon
-    title: 'Map Feature',
-    alt: 'alt text for image'
-}).addTo(map);
-*/
-    
-/*** Basic Polyline ***/
-/*
-L.polyline(arrayVariableStoringGeometry, {
-    color: '#20E167',
-    weight: 1.5,
-    opacity: 1,
-    dashArray: '5, 10'
-}).addTo(map);
-*/
-
-/*** Basic Polygon ***/
-/*
-L.polygon(arrayVariableStoringGeometry, {
-    color: '#20E167',
-    weight: 2.5,
-    opacity: 1,
-    fillColor: '#9AFFDE',
-    fillOpacity: 0.5  
-}).addTo(map);
-*/
-
-/****************************************/
-    
-/*** Default Icon ***/
-// for use in point layers
-/*
-L.icon({
-    iconUrl: 'path/to/image',
-    iconSize: [25, 25]    
-});
-*/
 
 /*** Awesome Markers ***/
 // depends on Leaflet Awesome Markers v x.x.x
@@ -183,11 +133,17 @@ L.AwesomeMarkers.icon({
 /****************************************/
 
 /*** Layer Control ***/
+// basemap group
 basemapGroup = {
     "Open Street Map": osm
 };
 
-overlayGroup = {};
+// thematic layers group
+overlayGroup = {
+    "Wild Class A Trout Streams": wildTroutStreams,
+    "Local Parks": localParks,
+    "PaMAGIC Members": pmgMembers
+};
 
 layerControl = L.control.layers(basemapGroup, overlayGroup, {
     collapsed: setLayerControlCollapsedValue(windowWidth) 
