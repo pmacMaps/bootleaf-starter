@@ -1,45 +1,30 @@
 'use strict';
 
-/*** Variables ***/
-var loadScreenTimer;
 // viewport
-var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
-windowArea = windowWidth * windowHeight,
+// width
+const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+// height
+const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+// area
+const windowArea = windowWidth * windowHeight;
+
 // GeoJSON search
 // update var names
-muniSearch = [],
-returnMuni = [],
-muniBounds,
+const muniSearch = [];
+const returnMuni = [];
+
 // map and controls
-map,
-homeCoords = [40.263044, -76.896423],
-container, // what is this?
-zoomHomeControl,
-loadScreenTimer,    
-// layer control
-basemapGroup,
-overlayGroup,
-layerControl,
-// Layers - not sure about this
-// open stree map
-osm,
-// ESRI service
-wildTroutStreams,
-localParks,
-mapServicesArray,    
-// GeoJSON
-pmgMembers;
+const homeCoords = [40.263044, -76.896423];
 
 // Map
-map = L.map('map', {
+const map = L.map('map', {
     center: homeCoords,
     zoom: setInitialMapZoom(windowWidth),
-    zoomControl: false       
+    zoomControl: false
 });
 
 // Zoom Home Control
-zoomHomeControl = L.Control.zoomHome({
+const zoomHomeControl = L.Control.zoomHome({
     position: 'topleft',
     zoomHomeTitle: 'Full map extent',
     homeCoordinates: homeCoords,
@@ -47,15 +32,18 @@ zoomHomeControl = L.Control.zoomHome({
 }).addTo(map);
 
 // Open Street Map
-osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+const osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
+
+// Esri Topographic Basemap (raster, in mature support)
+const esriTopo = L.esri.basemapLayer('Topographic');
 
 /*** ESRI Services ***/
 // ESRI Dynamic Map Service
 // rasterized display; don't add number at end of service url
 // Pennsylvania Fish & Boat Comission
-wildTroutStreams = L.esri.dynamicMapLayer({
+const wildTroutStreams = L.esri.dynamicMapLayer({
     // service url
     url: '//maps.pasda.psu.edu/ArcGIS/rest/services/pasda/PAFishBoat/MapServer',
     // image format
@@ -64,18 +52,18 @@ wildTroutStreams = L.esri.dynamicMapLayer({
     attribution: 'Pennsylvania Fish & Boat Comission',
     // layers to include from service
     // 9 = Class A Trout Streams
-    layers: [9]
+    layers: [9],
     // 24 = Hatcheries
-    layers: [9,24],
+    //layers: [9,24],
     isLoaded: false
     // set useCors to false if you get CORS error
     //useCors: false
-});    
+});
 
 // ESRI Feature Service
 // vector display; add number at end of service url
 // Local parks in Pennsylvania
-localParks = L.esri.featureLayer({
+const localParks = L.esri.featureLayer({
     // https does not work for this domain
     url: '//maps.pasda.psu.edu/arcgis/rest/services/pasda/DCNR/MapServer/18',// service url
     // attribution
@@ -103,7 +91,7 @@ localParks = L.esri.featureLayer({
 });
 
 // add popup to feature service
-// add conditional test for pop-up content 
+// add conditional test for pop-up content
 // false urls
 // format decimals for acres
 // add popup options for max width and max height functions
@@ -112,11 +100,11 @@ localParks.bindPopup(function(layer) {
 });
 
 // array containing map/feature services
-mapServicesArray = [pfbc,localParks];
+const mapServicesArray = [wildTroutStreams, localParks];
 
 // process map/feature services
 for (var i = 0; i < mapServicesArray.length; i++) {
-    processLoadEvent(mapServicesArray[i]);    
+    processLoadEvent(mapServicesArray[i]);
     mapServicesArray[i].addTo(map);
 }
 
@@ -125,40 +113,26 @@ for (var i = 0; i < mapServicesArray.length; i++) {
 /*** GeoJSON ***/
 // create sample with $.getJSON()
 // Sample depends upon Leaflet AJAX v x.x.x
-pmgMembers = new L.GeoJSON.AJAX('./assets/data/pamagic_members_06_2017.geojson', {
+const pmgMembers = new L.GeoJSON.AJAX('./assets/data/pamagic_members_06_2017.geojson', {
     // style point layers
     //pointToLayer: function (feature, latlng) {}
 }).addTo(map);
 
-/*** Awesome Markers ***/
-// depends on Leaflet Awesome Markers v x.x.x
-// Disposal Sites Icon
-/*
-L.AwesomeMarkers.icon({
-    icon: 'icon you want',
-    prefix: 'fa', // uses font awesome icon set
-    markerColor: 'darkred', // red, darkred, orange, green, darkgreen, blue, purple, darkpurple, cadetblue
-    iconColor: '#fff' // hex color
-});
-*/
-    
-/****************************************/
-
 /*** Layer Control ***/
 // basemap group
-basemapGroup = {
+const basemapGroup = {
     "Open Street Map": osm,
     "Esri Topographic": esriTopo
 };
 
 // thematic layers group
-overlayGroup = {
+const overlayGroup = {
     "Wild Class A Trout Streams": wildTroutStreams,
     "Local Parks": localParks,
     "PaMAGIC Members": pmgMembers
 };
 
-layerControl = L.control.layers(basemapGroup, overlayGroup, {
+const layerControl = L.control.layers(basemapGroup, overlayGroup, {
     collapsed: false
 }).addTo(map);
 
@@ -166,31 +140,31 @@ layerControl = L.control.layers(basemapGroup, overlayGroup, {
 geoLocater();
 
 // Address Locator
-//addressLocator();
+addressLocator();
 
 /*** Remove loading screen after services loaded ***/
-loadScreenTimer = window.setInterval(function() { 
-    var backCover = $('#back-cover'),
-        pfbcLoaded = pfbc.options.isLoaded,
-        localParksLoaded = localParks.options.isLoaded;        
-    
-    if (pfbcLoaded && localParksLoaded) {
+const loadScreenTimer = window.setInterval(function() {
+    const backCover = $('#back-cover');
+    let  troutStreamsLoaded = wildTroutStreams.options.isLoaded;
+    let  localParksLoaded = localParks.options.isLoaded;
+
+    if (troutStreamsLoaded && localParksLoaded) {
         // remove loading screen
         window.setTimeout(function() {
-        backCover.fadeOut('slow');         
+        backCover.fadeOut('slow');
        }, 4000);
-        
+
         // clear timer
-        window.clearInterval(loadScreenTimer);        
+        window.clearInterval(loadScreenTimer);
     } else {
-      console.log('layers still loading');    
+      console.log('layers still loading');
     }
-}, 2000);   
+}, 2000);
 
 // Remove loading screen when warning modal is closed
 $('#layerErrorModal').on('hide.bs.modal', function(e) {
    // remove loading screen
    $('#back-cover').fadeOut('slow');
    // clear timer
-   window.clearInterval(loadScreenTimer);     
+   window.clearInterval(loadScreenTimer);
 });

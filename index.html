@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>    
+  <head>
     <meta charset="utf-8">
     <title>BootLeaf Template</title>
 
@@ -17,10 +17,11 @@
 	<link type="image/ico" rel="icon" href="" />
 
 	<!-- Facebook sharing -->
-    <!-- Update Social Sharing Content -->
+  <!-- Update Social Sharing Content -->
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content="Bootleaf Template" />
-	<meta property="og:image" content="" />
+  <meta property="og:image" content="" />
+  <meta property="og:image:alt" content="alt text description of image" />
 	<meta property="og:description" content="A template application for using Leaflet.js and Bootstrap" />
 
     <!-- Bootstrap -->
@@ -30,14 +31,16 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" />
     <!-- Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
     <!-- Leaflet Awesome Markers -->
     <link rel="stylesheet" href="assets/plugins/leaflet-awesome-markers-2.0.2/leaflet.awesome-markers.css">
     <!-- Leaflet Zoom Home -->
     <link rel="stylesheet" href="assets/plugins/leaflet.zoomhome-0.2.0/leaflet.zoomhome.css">
     <!-- ESRI Geosearch -->
-    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.css"
-    integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
     crossorigin="">
     <!-- Leaflet Locate Control -->
     <link rel="stylesheet" href="assets/plugins/leaflet-locatecontrol-0.66.0/L.Control.Locate.min.css">
@@ -177,7 +180,9 @@
     <!-- Bootstrap -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- Leaflet -->
-    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
     <!-- Leaflet Zoom Home -->
     <script src="assets/plugins/leaflet.zoomhome-0.2.0/leaflet.zoomhome.min.js"></script>
     <!-- Leaflet Awesome Markers -->
@@ -185,17 +190,17 @@
     <!-- Leaflet AJAX -->
     <script src="assets/plugins/leaflet-ajax-2.1.0/leaflet.ajax.min.js"></script>
     <!-- ESRI Leaflet -->
-    <script src="https://unpkg.com/esri-leaflet@2.2.4/dist/esri-leaflet.js"
-    integrity="sha512-tyPum7h2h36X52O2gz+Pe8z/3l+Y9S1yEUscbVs5r5aEY5dFmP1WWRY/WLLElnFHa+k1JBQZSCDGwEAnm2IxAQ=="
+    <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+    integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
     crossorigin=""></script>
-    <!-- ESRI Leaflet Renderer -->
-    <script src="https://unpkg.com/esri-leaflet-renderers@2.0.6/dist/esri-leaflet-renderers.js"
-    integrity="sha512-mhpdD3igvv7A/84hueuHzV0NIKFHmp2IvWnY5tIdtAHkHF36yySdstEVI11JZCmSY4TCvOkgEoW+zcV/rUfo0A=="
+    <!-- Esri Leaflet Renderers -->
+    <script src="https://unpkg.com/esri-leaflet-renderers@2.1.2/dist/esri-leaflet-renderers.js"
+    integrity="sha512-/McnqdlwYvfeOEWqoniEagFRQnLi/TNbkHe4EJypmZI02LBT7vBU/+PZ5W3FSsFFlRbnMCsJvnbp5MX8XOBrnQ=="
     crossorigin=""></script>
     <!-- ESRI Leaflet Geosearch -->
-    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
-    integrity="sha512-zdT4Pc2tIrc6uoYly2Wp8jh6EPEWaveqqD3sT0lf5yei19BC1WulGuh5CesB0ldBKZieKGD7Qyf/G0jdSe016A=="
-    crossorigin=""></script>    
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
+    crossorigin=""></script>
     <!-- Esri Leaflet Legend -->
     <script src="assets/plugins/esri-leaflet-legend-2.0.0/esri-leaflet-legend.js"></script>
     <!-- Leaflet Locate -->

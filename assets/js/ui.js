@@ -2,14 +2,6 @@
 *** Navigation UI Controls ***
 =============================*/
 
-// Fade out loading screen
-$(document).ready(function(){
-  setTimeout(function(){
-    $('#back-cover').fadeOut("slow");  
-    $('#cog-icon').fadeOut("slow");
-  }, 5000);
-});
-
 /*** Toggle hamburger navigation menu ***/
 $("#nav-btn").click(function() {
   $(".navbar-collapse").collapse("toggle");
@@ -17,14 +9,14 @@ $("#nav-btn").click(function() {
 });
 
 /*** Navigation Modal Windows ***/
-// Open About info window 
+// Open About info window
 $("#about-btn").click(function() {
   $("#aboutModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
 
-// Open Layers info window 
+// Open Layers info window
 $("#layers-btn").click(function() {
   $("#layersModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");

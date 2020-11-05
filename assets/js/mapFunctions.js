@@ -2,36 +2,36 @@
 *** Functions ***
 ===============*/
 // Attach layers control to modal
-    function attachLayersControl() {
-        var layerControl = $(".leaflet-control-layers"),
-        layerModalBody = $('#layersControlBox');
+function attachLayersControl() {
+    const layerControl = $(".leaflet-control-layers"),
+    layerModalBody = $('#layersControlBox');
 
-        layerControl.detach();
-        layerModalBody.append(layerControl);
-    }
+    layerControl.detach();
+    layerModalBody.append(layerControl);
+}
 
 // function to handle load event for map services
 function processLoadEvent(service) {
    // service request success event
-   service.on('requestsuccess', function(e) {     
+   service.on('requestsuccess', function(e) {
       // set isLoaded property to true
-      service.options.isLoaded = true;      
-   });   
-  
+      service.options.isLoaded = true;
+   });
+
    // request error event
-   service.on('requesterror', function(e) {      
+   service.on('requesterror', function(e) {
       // if the error url matches the url for the map service, display error messages
       // without this logic, various urls related to the service appear
-      if (e.url == service.options.url) {          
+      if (e.url == service.options.url) {
          // set isLoaded property to false
-         service.options.isLoaded = false; 
-        
+         service.options.isLoaded = false;
+
          // add warning messages to console
          console.warn('Layer failed to load: ' + service.options.url);
          console.warn('Code: ' + e.code + '; Message: ' + e.message);
-                              
+
          // show modal window
-         $('#layerErrorModal').modal('show'); 
+         $('#layerErrorModal').modal('show');
       }
    });
 }
@@ -40,20 +40,20 @@ function processLoadEvent(service) {
 // fine tune viewport width values and zoom levels based upon
 // extent of your map
 function setInitialMapZoom(windowWidth) {
-    var mapZoom;    
+    let mapZoom;
     if (windowWidth < 500) {
-        mapZoom = 9; 
+        mapZoom = 9;
     } else if (windowWidth >= 500 && windowWidth < 1000) {
-        mapZoom = 10; 
+        mapZoom = 10;
     } else {
-        mapZoom = 11;  
+        mapZoom = 11;
     }
     return mapZoom;
 }
 
-// Set max height of pop-up window 
+// Set max height of pop-up window
 function setPopupMaxHeight(windowArea) {
-    var maxHeight;
+    let maxHeight;
     if (windowArea < 315000 ) {
         maxHeight = 150;
     } else {
@@ -62,9 +62,9 @@ function setPopupMaxHeight(windowArea) {
     return maxHeight;
 }
 
-// Set max width of pop-up window 
+// Set max width of pop-up window
 function setPopupMaxWidth(windowWidth) {
-    var maxWidth;
+    let maxWidth;
     if (windowWidth < 450 ) {
         maxWidth = 240;
     } else {
@@ -75,12 +75,12 @@ function setPopupMaxWidth(windowWidth) {
 
 // Related to geocoder
 // Put in geocoder module?
-var geocodeInput = $('.geocoder-control-input');
+const geocodeInput = $('.geocoder-control-input');
 
 // Hides attribution when geosearch is expanded
 function geocodeInputHideAttribution() {
-    var geocodeInput = $('.geocoder-control-input');
-    var testString = "Search for an address";
+    const geocodeInput = $('.geocoder-control-input');
+    const testString = "Search for an address";
     if (geocodeInput.attr('placeholder') === testString) {
         $('div.leaflet-bottom').css('z-index', -1);
     }
@@ -103,10 +103,10 @@ function geocodeInputDisplayFix(windowArea) {
 ***********************/
 
 // DOM Content Loaded
-$(document).ready(function() {    
+$(document).ready(function() {
     geocodeInputDisplayFix(windowArea);
     attachLayersControl();
-    
+
     // window resize event
     // resize event
     $(window).resize(function() {
