@@ -108,10 +108,9 @@ for (var i = 0; i < mapServicesArray.length; i++) {
     mapServicesArray[i].addTo(map);
 }
 
-/****************************************/
-
 /*** GeoJSON ***/
 // create sample with $.getJSON()
+
 // Sample depends upon Leaflet AJAX v x.x.x
 const pmgMembers = new L.GeoJSON.AJAX('./assets/data/pamagic_members_06_2017.geojson', {
     // style point layers
